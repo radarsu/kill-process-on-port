@@ -36,14 +36,16 @@ exports.killProcessOccupyingPort = (port = yargs.argv.port, askQuestion = true) 
         port,
     });
     if (foundPort !== port) {
-        const answer = yield inquirer.prompt({
-            message: `Port ${port} is taken. Kill an app using it?`,
-            name: `kill`,
-            type: 'list',
-            choices: ['yes', 'no'],
-        });
-        if (answer.kill === 'no') {
-            throw new Error(`port ${port} is taken`);
+        if (askQuestion) {
+            const answer = yield inquirer.prompt({
+                message: `Port ${port} is taken. Kill an app using it?`,
+                name: `kill`,
+                type: 'list',
+                choices: ['yes', 'no'],
+            });
+            if (answer.kill === 'no') {
+                throw new Error(`port ${port} is taken`);
+            }
         }
         yield exports.killProcessByPort(port);
     }
