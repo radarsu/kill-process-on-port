@@ -1,0 +1,37 @@
+{
+    "rulesDirectory": ["src", "test"],
+    "extends": [
+        "tslint:latest"
+    ],
+    "rules": {
+        "await-promise": [false, "Thenable"],
+        "comment-format": [true, "check-space", {
+            "ignore-words": ["TODO", "HACK"]
+        }],
+        "interface-name": [true, "never-prefix"],
+        "max-line-length": [false, 140],
+        "no-angle-bracket-type-assertion": false,
+        "no-empty": false,
+        "no-empty-interface": false,
+        "no-object-literal-type-assertion": false,
+        "no-var-requires": false,
+        "object-literal-key-quotes": [true, "as-needed"],
+        "object-literal-sort-keys": false,
+        "ordered-imports": [false, {
+            "import-sources-order": "lowercase-last",
+            "named-imports-order": "lowercase-last"
+        }],
+        "quotemark": [true, "single"],
+        "semicolon": [true, "always"],
+        "whitespace": [true,
+            "check-branch",
+            "check-decl",
+            "check-operator",
+            "check-module",
+            "check-separator",
+            "check-type",
+            "check-preblock"
+        ],
+        "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-pascal-case"]
+    }
+}
