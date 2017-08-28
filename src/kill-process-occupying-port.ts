@@ -9,6 +9,7 @@ import yargs = require('yargs');
 import portfinder = require('portfinder');
 import processPromises = require('ts-process-promises');
 
+// utility functions
 export const getProcessPortId = async (port: number): Promise<number> => {
     const result: processPromises.ExecResult = <any>await processPromises.exec(`fuser ${port}/tcp`);
     const id = parseInt(result.stdout, 10);
