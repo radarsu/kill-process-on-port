@@ -32,8 +32,8 @@
     "commit": "git-cz",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
-    "precommit": "lint-staged",
-    "prepush": "npm run build && git add . && git commit -m \"feat: build\""
+    "precommit": "npm run build && lint-staged",
+    "prepush": ""
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
