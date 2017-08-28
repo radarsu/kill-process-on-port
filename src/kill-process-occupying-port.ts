@@ -39,15 +39,17 @@ export const killProcessOccupyingPort = async (port: number = yargs.argv.port, a
         });
 
         if (foundPort !== port) {
-            const answer = await inquirer.prompt({
-                message: `Port ${port} is taken. Kill an app using it?`,
-                name: `kill`,
-                type: 'list',
-                choices: ['yes', 'no'],
-            });
+            if (askQuestion) {
+                const answer = await inquirer.prompt({
+                    message: `Port ${port} is taken. Kill an app using it?`,
+                    name: `kill`,
+                    type: 'list',
+                    choices: ['yes', 'no'],
+                });
 
-            if (answer.kill === 'no') {
-                throw new Error(`port ${port} is taken`);
+                if (answer.kill === 'no') {
+                    throw new Error(`port ${port} is taken`);
+                }
             }
 
             await killProcessByPort(port);
