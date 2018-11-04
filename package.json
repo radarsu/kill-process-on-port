@@ -1,119 +1,99 @@
 {
-  "name": "kill-process-occupying-port",
-  "version": "0.0.1",
-  "description": "",
-  "keywords": [],
-  "main": "dist/kill-process-occupying-port.js",
-  "module": "dist/kill-process-occupying-port.js",
-  "typings": "dist/types/kill-process-occupying-port.d.ts",
-  "files": [
-    "dist"
-  ],
-  "author": "Radar Su <rkrohmorath@gmail.com>",
-  "repository": {
-      "type": "git",
-      "url": "https://github.com/radarsu/kill-process-occupying-port.git"
-  },
+  "name": "kill-process-on-port",
+  "version": "1.0.0",
+  "description": "Not responding, unresponsive process killer. Kill process on port you wanna use.",
+  "main": "build/main/index.js",
+  "typings": "build/main/index.d.ts",
+  "module": "build/module/index.js",
+  "repository": "https://github.com/radarsu/kill-process-on-port",
   "license": "MIT",
-  "engines": {
-    "node": ">=6.0.0"
-  },
+  "keywords": [],
   "scripts": {
-    "lint": "tslint -p tsconfig.json --type-check -t codeFrame 'src/**/*.ts'",
-    "prebuild": "rimraf dist",
-    "build": "tsc",
-    "build:rollup": "tsc && rollup -c && rimraf compiled && typedoc --out dist/docs --target es6 --theme minimal src",
-    "start": "tsc-watch --onSuccess 'rollup -c'",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:prod": "npm run lint && npm run test -- --coverage --no-cache",
-    "deploy-docs": "ts-node tools/gh-pages-publish",
-    "report-coverage": "cat ./coverage/lcov.info | coveralls",
-    "commit": "git-cz",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
-    "precommit": "lint-staged"
+    "build:main": "tsc -p tsconfig.json",
+    "build:module": "tsc -p tsconfig.module.json",
+    "build": "run-s clean && run-p build:*",
+    "clean": "trash build test",
+    "cov:check": "nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100",
+    "cov:html": "nyc report --reporter=html",
+    "cov:send": "nyc report --reporter=lcov > coverage.lcov && codecov",
+    "cov": "run-s build test:unit cov:html && opn coverage/index.html",
+    "doc:html": "typedoc src/ --target ES6 --mode file --out build/docs",
+    "doc:json": "typedoc src/ --target ES6 --mode file --json build/docs/typedoc.json",
+    "doc:publish": "gh-pages -m \"[ci skip] Updates\" -d build/docs",
+    "doc": "run-s doc:html && opn build/docs/index.html",
+    "fix:prettier": "prettier \"src/**/*.ts\" --write",
+    "fix:tslint": "tslint --fix --project .",
+    "fix": "run-s fix:*",
+    "info": "npm-scripts-info",
+    "publish": "npm run build && git add . && git commit -m 'fix' && git push && npm publish",
+    "reset": "git clean -dfx && git reset --hard && npm i",
+    "test:lint": "tslint --project . && prettier \"src/**/*.ts\" --list-different",
+    "test:unit": "nyc --silent ava",
+    "test": "run-s build test:*",
+    "version": "standard-version",
+    "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
+    "all": "run-s reset test cov:check doc:html",
+    "prepare-release": "run-s all version doc:publish"
   },
-  "lint-staged": {
-    "{src,test}/**/*.ts": [
-      "tsfmt -r",
-      "git add"
+  "scripts-info": {
+    "info": "Display information about the package scripts",
+    "build": "Clean and rebuild the project",
+    "fix": "Try to automatically fix any linting problems",
+    "test": "Lint and unit test the project",
+    "watch": "Watch and rebuild the project on save, then rerun relevant tests",
+    "cov": "Rebuild, run tests, then create and open the coverage report",
+    "doc": "Generate HTML API documentation and open it in a browser",
+    "doc:json": "Generate API documentation in typedoc JSON format",
+    "version": "Bump package.json version, update CHANGELOG.md, tag release",
+    "reset": "Delete all untracked files and reset the repo to the last commit",
+    "prepare-release": "One-step: clean, build, test, publish docs, and prep a release"
+  },
+  "engines": {
+    "node": ">=8.9"
+  },
+  "dependencies": {
+    "inquirer": "^6.2.0",
+    "portfinder": "^1.0.19"
+  },
+  "devDependencies": {
+    "@types/inquirer": "0.0.43",
+    "@types/uuid": "^3.4.4",
+    "ava": "1.0.0-beta.7",
+    "codecov": "^3.1.0",
+    "cz-conventional-changelog": "^2.1.0",
+    "gh-pages": "^2.0.0",
+    "npm-run-all": "^4.1.3",
+    "nyc": "^13.0.1",
+    "opn-cli": "^3.1.0",
+    "prettier": "^1.14.3",
+    "standard-version": "^4.4.0",
+    "trash-cli": "^1.4.0",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "tslint-immutable": "^4.7.0",
+    "typedoc": "^0.13.0",
+    "typescript": "^3.0.3"
+  },
+  "ava": {
+    "failFast": true,
+    "files": [
+      "build/main/**/*.spec.js"
+    ],
+    "sources": [
+      "build/main/**/*.js"
     ]
   },
   "config": {
     "commitizen": {
-      "path": "node_modules/cz-conventional-changelog"
-    },
-    "validate-commit-msg": {
-      "types": "conventional-commit-types",
-      "helpMessage": "Use \"npm run commit\" instead, we use conventional-changelog format :) (https://github.com/commitizen/cz-cli)"
+      "path": "cz-conventional-changelog"
     }
   },
-  "jest": {
-    "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/test/"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 0,
-        "functions": 0,
-        "lines": 0,
-        "statements": 0
-      }
-    }
+  "prettier": {
+    "singleQuote": true
   },
-  "devDependencies": {
-    "@types/inquirer": "0.0.35",
-    "@types/jest": "^19.2.4",
-    "@types/node": "^7.0.39",
-    "@types/yargs": "^8.0.2",
-    "colors": "^1.1.2",
-    "commitizen": "^2.9.6",
-    "coveralls": "^2.13.1",
-    "cross-env": "^5.0.1",
-    "cz-conventional-changelog": "^2.0.0",
-    "husky": "^0.13.4",
-    "jest": "^20.0.4",
-    "jest-cli": "^20.0.4",
-    "lint-staged": "^3.6.1",
-    "lodash": "^4.17.4",
-    "prettier": "^1.4.4",
-    "prompt": "^1.0.0",
-    "replace-in-file": "^2.5.0",
-    "rimraf": "^2.6.1",
-    "rollup": "^0.42.0",
-    "rollup-plugin-commonjs": "^8.0.2",
-    "rollup-plugin-json": "^2.3.0",
-    "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-node-globals": "^1.1.0",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "semantic-release": "^6.3.6",
-    "ts-jest": "^20.0.6",
-    "ts-node": "^3.0.6",
-    "tsc-watch": "^1.0.5",
-    "tslint": "^5.4.3",
-    "tslint-config-prettier": "^1.1.0",
-    "tslint-config-standard": "^6.0.1",
-    "typedoc": "^0.7.1",
-    "typescript": "^2.3.4",
-    "typescript-formatter": "^5.2.0",
-    "validate-commit-msg": "^2.12.2",
-    "validate-npm-package-name": "^3.0.0"
-  },
-  "dependencies": {
-    "inquirer": "^3.2.2",
-    "portfinder": "^1.0.13",
-    "ts-process-promises": "^1.0.2",
-    "yargs": "^8.0.2"
+  "nyc": {
+    "exclude": [
+      "**/*.spec.js"
+    ]
   }
 }
