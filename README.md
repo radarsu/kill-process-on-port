@@ -8,6 +8,7 @@
 </p>
 
 <p align="center">
+	<a href="https://www.npmjs.com/package/kill-process-on-port" target="_blank" alt="npm kill-process-on-port"><img src="https://img.shields.io/npm/v/kill-process-on-port.svg" alt="npm" /></a>
 	<img src="https://img.shields.io/github/license/radarsu/kill-process-on-port.svg" />
 	<img src="https://img.shields.io/github/stars/radarsu/kill-process-on-port.svg" />
 	<a href="https://twitter.com/radarsujs"><img src="https://img.shields.io/twitter/url/https/github.com/radarsu/kill-process-on-port.svg?style=social" /></a>
