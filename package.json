@@ -1,6 +1,6 @@
 {
   "name": "kill-process-on-port",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Not responding, unresponsive process killer. Kill process on port you wanna use.",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
