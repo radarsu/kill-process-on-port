@@ -16,7 +16,7 @@
 
 ## Description
 
-If you work with application that occupies some port and sometimes hangs up - you definitely should start using `kill-process-on-port`. <strong>It shows you a prompt in console</strong>, then you choose to either kill and application occupying port or not. Safe and sound!
+If you work with application that occupies some port and sometimes hangs up - you definitely should start using `kill-process-on-port`. <strong>It shows you a prompt in console</strong>, then you choose to either kill an application occupying port or not. Safe and sound!
 
 ## Installation
 
