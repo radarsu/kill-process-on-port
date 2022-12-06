@@ -14,6 +14,7 @@
 	<a href="https://twitter.com/radarsujs"><img src="https://img.shields.io/twitter/url/https/github.com/radarsu/kill-process-on-port.svg?style=social" /></a>
 </p>
 
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/radarsu)
 ## Description
 
 If you work with application that occupies some port and sometimes hangs up - you definitely should start using `kill-process-on-port`. <strong>It shows you a prompt in console</strong>, then you choose to either kill an application occupying port or not. Safe and sound!
