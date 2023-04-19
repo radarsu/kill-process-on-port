@@ -57,7 +57,7 @@
   "devDependencies": {
     "@types/inquirer": "0.0.43",
     "@types/uuid": "^3.4.4",
-    "ava": "1.0.0-beta.7",
+    "ava": "5.2.0",
     "codecov": "^3.1.0",
     "cz-conventional-changelog": "^2.1.0",
     "gh-pages": "^2.0.0",
@@ -66,7 +66,7 @@
     "opn-cli": "^3.1.0",
     "prettier": "^1.14.3",
     "standard-version": "^8.0.1",
-    "trash-cli": "^1.4.0",
+    "trash-cli": "^5.0.0",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
     "tslint-immutable": "^4.7.0",
